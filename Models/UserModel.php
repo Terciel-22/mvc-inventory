@@ -4,7 +4,7 @@
 
     class UserModel extends Model
     {
-        function loginAccount($email)
+        function getAccount($email)
         {
             $sql = "SELECT * FROM users WHERE email=:email";
             $stmt = $this->connect()->prepare($sql);

@@ -10,6 +10,10 @@ body {
     font-size: 16px;
     background-color: rgb(158,156,166);
 }
+button {
+    cursor: pointer;    
+}
+
 .wrapper {
     height: 100vh;
     display: flex;
@@ -22,8 +26,6 @@ body {
     padding: 3rem 4rem;
     box-shadow: 5px 5px 5px #000;
     width: 30rem;
-}
-.card form {
     text-align: center;
 }
 .card form h1 
@@ -58,4 +60,15 @@ body {
     color: red;
     font-size: 0.7rem;
     word-wrap: break-word;
+}
+
+@media only screen and (max-width: 375px)
+{
+    .card {
+        width: 20rem;
+        padding: 1rem 2rem;
+    }
+    .card span{
+        font-size: 0.8rem;
+    }
 }

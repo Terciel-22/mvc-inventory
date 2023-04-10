@@ -23,13 +23,25 @@
                 if($_SERVER["REQUEST_METHOD"] == "POST")
                 {
                     $controller->register();
-                    exit();
+                }else 
+                {
+                    $controller->registrationForm();
                 }
-                $controller->registrationForm();
             ?>
         </div>
     </div>
     
-    <script src="assets/js/script.js"></script>
+    <script>
+        const registrationReset = document.getElementById("registration-reset");
+        registrationReset.addEventListener("click",function(){
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("cpassword").value = "";
+            document.getElementById("name-err").innerHTML = "";
+            document.getElementById("email-err").innerHTML = "";
+            document.getElementById("password-err").innerHTML = "";
+        });
+    </script>
 </body>
 </html>

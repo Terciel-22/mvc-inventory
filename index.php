@@ -23,13 +23,22 @@
                 if($_SERVER["REQUEST_METHOD"] == "POST")
                 {
                     $controller->login();
-                    exit();
+                }else 
+                {
+                    $controller->loginForm();
                 }
-                $controller->loginForm();
             ?>
         </div>
     </div>
     
-    <script src="assets/js/script.js"></script>
+    <script>
+        const loginReset = document.getElementById("login-reset");
+        loginReset.addEventListener("click",function(){
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("email-err").innerHTML = "";
+            document.getElementById("password-err").innerHTML = "";
+        });
+    </script>
 </body>
 </html>

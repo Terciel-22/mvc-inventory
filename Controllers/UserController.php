@@ -30,6 +30,9 @@
             }else if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
             {
                 $errors["email"] = "Email is invalid!";
+            }else if(!$this->isExistEmail($_POST['email']))
+            {
+                $errors["email"] = "Email does not exist!";
             }else 
             {
                 $email = $this->sanitizeInput($_POST['email']);
@@ -46,20 +49,20 @@
             if(count($errors) > 0)
             {
                 $this->view->renderLoginForm($errors);
-                exit();
-            }
-
-            $result = $this->model->loginAccount($email);
-            if($result["row-count"] == 1)
+            } else 
             {
-                if(password_verify($password,$result["user"]["password"]))
+                $result = $this->model->getAccount($email);
+                if($result["row-count"] == 1)
                 {
-                    $_SESSION["name"] = $result["user"]["name"];
-                    header("Location: home.php");
-                }else 
-                {
-                    $errors["password"] = "Incorrect password"; 
-                    $this->view->renderLoginForm($errors);
+                    if(password_verify($password,$result["user"]["password"]))
+                    {
+                        $_SESSION["name"] = $result["user"]["name"];
+                        header("Location: home.php");
+                    }else 
+                    {
+                        $errors["password"] = "Incorrect password"; 
+                        $this->view->renderLoginForm($errors);
+                    }
                 }
             }
         }
@@ -114,10 +117,11 @@
             if(count($errors) > 0)
             {
                 $this->view->renderRegistrationForm($errors);
-                exit();
+            } else 
+            {
+                $this->model->registerAccount($name,$email,$password);
+                header("Location: index.php");
             }
-            $this->model->registerAccount($name,$email,$password);
-            header("Location: index.php");
         }
 
         function logout()
@@ -132,6 +136,17 @@
             $input = stripcslashes($input);
             $input = htmlspecialchars($input);
             return $input;
+        }
+
+        private function isExistEmail($email)
+        {
+            $result = $this->model->getAccount($email);
+            if($result["row-count"] >= 1)
+            {
+               return true;
+               exit();
+            }
+            return false;
         }
     }
 ?>
